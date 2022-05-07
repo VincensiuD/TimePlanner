@@ -1,13 +1,32 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import { Storage } from '../components/services/dataStorage';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import TabOneScreen from './TabOneScreen';
 
 export default function TabTwoScreen() {
+
+  const [clientsArray,setClientsArray] = useState<Client[]>([]);
+  const nav = useNavigation();
+
+  function addNewClient(){
+
+  }
+
+
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
+      <TouchableOpacity onPress={() =>
+          nav.navigate('NotFound')
+        }>
+        <Text>Add Client</Text>
+      </TouchableOpacity> 
+     
       <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
     </View>
   );
