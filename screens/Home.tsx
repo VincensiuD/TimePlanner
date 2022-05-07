@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { View,Text, TouchableOpacity, TextInput } from "react-native";
 import { Storage } from "../components/services/dataStorage";
+import { VButton } from "../components/VButton";
 
 export function Home(props:any){
 
@@ -30,9 +31,7 @@ export function Home(props:any){
                 )}
             </View>      
             <View>
-                  <TouchableOpacity onPress={navigateToAddClientPage}>
-                       <Text>Add Client</Text>
-                  </TouchableOpacity>
+                <VButton purpose={navigateToAddClientPage} text="Add Client" colour='green'/>
             </View>
             
         </View>
@@ -43,6 +42,7 @@ export function Home(props:any){
 const styles = StyleSheet.create({
     card:{
         borderColor: 'red',
-        backgroundColor: 'pink'
+        backgroundColor: 'pink',
+        justifyContent:'center'
     }
 });
