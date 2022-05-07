@@ -1,6 +1,6 @@
 interface Task{
     title: string;
-    time:  Date;
+    time:  number;
     commenced: boolean;
     completed: boolean;
 }

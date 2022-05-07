@@ -19,5 +19,10 @@ const styles = StyleSheet.create({
     button:{
         borderRadius: 3,
         backgroundColor: 'green',
+        maxWidth: 120,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        padding: 5,
+
     }
 });
