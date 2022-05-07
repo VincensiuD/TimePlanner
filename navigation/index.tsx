@@ -19,6 +19,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { AddClient } from '../screens/AddClient';
 import { Home } from '../screens/Home';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -41,6 +42,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component ={Home}/>
+      <Stack.Screen name="AddClient" component ={AddClient}/>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
