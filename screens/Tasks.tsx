@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View, StyleSheet, TextInput } from "react-nativ
 import { Storage } from "../components/services/dataStorage";
 import { useState } from "react";
 import {VButton} from "../components/VButton"
-import Navigation from "../navigation";
+
 
 function findClientById(allClients:Client[],id:number): Client{
 
@@ -65,7 +65,7 @@ export function Task({route,navigation}){
             title: title,
             time: time,
             commenced: false,
-            completed: false
+            completed: false,
         }
 
         
@@ -89,7 +89,7 @@ export function Task({route,navigation}){
         <View>
             <View>
                 {tasks.map(x=>
-                    <View>
+                    <View style={styles.card}>
                         <Text>Title: {x.title}</Text>
                         <Text>Time: {(x.time).toString()}</Text>
                         <Text>Commenced: {x.commenced}</Text>
@@ -101,12 +101,12 @@ export function Task({route,navigation}){
                 <Text>
                     Add Task
                 </Text>
-                <Text>Id</Text>
+                <Text>Title</Text>
                  <TextInput style={styles.textInput} onChange={saveTitle}/>
                  <Text>Time</Text>
                  <TextInput style={styles.textInput} onChange={saveTime}/>
             </View>
-            <VButton text="Save Task" colour="lightBlue" purpose={saveTask}/>
+            <VButton text="Save Task" colour="blue" purpose={saveTask}/>
         </View>       
     );
 }
@@ -115,5 +115,23 @@ export function Task({route,navigation}){
 const styles = StyleSheet.create({
     textInput:{
         backgroundColor: 'grey',
+        borderWidth: 2,
+        borderRadius: 2,
+        padding: 5,
     },
+    card:{
+        borderColor: 'red',
+        borderWidth: 3,
+        backgroundColor: 'yellow',
+        justifyContent:'center',
+        padding: 5,
+        margin: 5,
+        textAlign: 'center'
+    },
+    container:{
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: 'slate',
+    }
 });
+

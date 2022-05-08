@@ -26,7 +26,7 @@ export function AddClient(props: any){
         setDesc(newDesc);
     }
 
-     function saveClient(): boolean{
+    function saveClient(){
         let newClient:Client =
         {
             id : id,
@@ -40,24 +40,10 @@ export function AddClient(props: any){
 
         if(newClient.id != 0){
             Storage.setClients('Client',newClients);
-            return true
+            navigation.push('Home');
         }
-       
-            console.log("Need ID");
-            return false;           
     }
 
-     async function navigateHome(){
-
-        let sucessful = false;
-        
-        sucessful = await saveClient();
-
-        if(sucessful){
-        navigation.navigate('Home');
-        }
-     }
-    
     return(
         <View>
             <Text>Home Screen</Text>
@@ -76,7 +62,7 @@ export function AddClient(props: any){
                  <TextInput  style={styles.textInput} onChange={saveDesc}/>
                 </View>
                 <View style={styles.viewFlex}>
-                    <TouchableOpacity onPress={navigateHome}>
+                    <TouchableOpacity onPress={saveClient}>
                         <Text style={styles.button}>Save Client</Text>
                     </TouchableOpacity>
                 </View>            
@@ -86,6 +72,7 @@ export function AddClient(props: any){
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     textInput:{
