@@ -92,6 +92,19 @@ export function Task({route,navigation}){
         return !status;
     }
 
+
+    function colourChange(task: Task){
+        switch (true){
+            case (task.completed === true && task.commenced === true ):
+            return "grey";
+            case (task.completed === false && task.commenced === true ):
+                return "yellow";
+            case  (task.completed === false && task.commenced === false ):
+                return "red";
+                default:
+                return "white";
+        }
+    }
  
 
     function changeStatus(task: Task){
@@ -120,7 +133,7 @@ export function Task({route,navigation}){
         <View>
             <View>
                 {tasks.map(x=>
-                    <TouchableOpacity style={[styles.card,{backgroundColor: x.completed? "grey" : "yellow"}]} onPress={()=>changeStatus(x)}>
+                    <TouchableOpacity style={[styles.card,{backgroundColor: colourChange(x)}]} onPress={()=>changeStatus(x)}>
                         <Text>Title: {x.title}</Text>
                         <Text>Time: {(x.time).toString()}</Text>
                         <Text>Commenced: {(x.commenced).toString()}</Text>
