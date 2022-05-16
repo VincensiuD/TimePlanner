@@ -25,12 +25,14 @@ export function Home(props:any){
             </View>
             <View>
                 {allClients.map(x => 
+                <View >
                     <TouchableOpacity style={styles.card} onPress={()=>navigateToTasksList(x.id)}>
                         <Text>Id: {x.id}</Text> 
                         <Text>Title: {x.title}</Text>
                         <Text>Details: {x.description}</Text>
                         <Text>Number of Task: {x.tasks.length}</Text>
                     </TouchableOpacity>
+                </View>
                 
                 )}
             </View>      
@@ -50,11 +52,17 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         padding: 5,
         margin: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        minWidth: 130,
     },
-    container:{
-        justifyContent:'center',
+    container:{      
         alignItems:'center',
+        justifyContent:'center',
         backgroundColor: 'slate',
+    },
+    container2:{
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection: 'row',
     }
 });

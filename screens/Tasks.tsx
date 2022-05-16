@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, StyleSheet, TextInput } from "react-nativ
 import { Storage } from "../components/services/dataStorage";
 import { useState } from "react";
 import {VButton} from "../components/VButton"
+import { tsTypeAliasDeclaration } from "@babel/types";
 
 
 function findClientById(allClients:Client[],id:number): Client{
@@ -17,18 +18,24 @@ function findClientById(allClients:Client[],id:number): Client{
 }
 
 
-function updateClients(index:number, tasksArray:Client[], newObject:Client): Client[]{
+function updateClients(index:number, clientsArray:Client[], selectedClient:Client, newTasks:Task[]): Client[]{
 
-    tasksArray.splice(index,1,newObject);
+    let newClientObject: Client = {
+        id: selectedClient.id,
+        title: selectedClient.title,
+        description: selectedClient.description,
+        tasks: newTasks
+    }
 
-    return tasksArray;
+    clientsArray.splice(index,1,newClientObject);
+
+    return clientsArray;
 }
 
 export function Task({route,navigation}){    
 
    
     const {id} = route.params;
-    console.log(id);
     const allClients:Client[] = Storage.getClients('Client');
     
     let selectedClient: Client = findClientById(allClients,id);
@@ -47,6 +54,8 @@ export function Task({route,navigation}){
     let [title, setTitle] = useState<string>("");
     let [time,setTime] = useState<number>(0);
 
+    let [bgColour,setBgColour] = useState<string>("pink");
+
 
     function saveTitle(event:any){
         let newTitle:string = event.target.value;
@@ -59,6 +68,8 @@ export function Task({route,navigation}){
         setTime(newTime);
     }
 
+
+
     function saveTask(){
 
         let newTask: Task = {
@@ -67,34 +78,54 @@ export function Task({route,navigation}){
             commenced: false,
             completed: false,
         }
-
         
         let newTasks = [...tasks, newTask]
 
-        let newClientObject: Client = {
-            id: selectedClient.id,
-            title: selectedClient.title,
-            description: selectedClient.description,
-            tasks: newTasks
-        }
-
-        let newClients =  updateClients(index,allClients,newClientObject);
-        
+        let newClients = updateClients(index,allClients,selectedClient,newTasks);
         Storage.setClients("Client",newClients);
 
-       navigation.navigate('Task',{id});
+       navigation.push('Task',{id});
+    }
+
+    function flipBoolean(status:boolean){
+
+        return !status;
+    }
+
+ 
+
+    function changeStatus(task: Task){
+
+        if(!task.completed && task.commenced){
+            task.completed = true;
+         
+        }
+        else if(!task.completed && !task.commenced){
+            task.commenced = true;
+        
+        }       
+        else if(task.commenced && task.completed){
+            task.commenced = false;
+            task.completed = false;
+      
+        }
+        let updatedClients = updateClients(index,allClients,selectedClient,tasks);
+
+        Storage.setClients("Client",updatedClients);
+
+        navigation.push('Task',{id});
     }
 
     return(
         <View>
             <View>
                 {tasks.map(x=>
-                    <View style={styles.card}>
+                    <TouchableOpacity style={[styles.card,{backgroundColor: x.completed? "grey" : "yellow"}]} onPress={()=>changeStatus(x)}>
                         <Text>Title: {x.title}</Text>
                         <Text>Time: {(x.time).toString()}</Text>
-                        <Text>Commenced: {x.commenced}</Text>
-                        <Text>Completed: {x.completed}</Text>
-                    </View>               
+                        <Text>Commenced: {(x.commenced).toString()}</Text>
+                        <Text>Completed: {(x.completed).toString()}</Text>
+                    </TouchableOpacity>               
                     )}
             </View>
             <View>
@@ -122,7 +153,7 @@ const styles = StyleSheet.create({
     card:{
         borderColor: 'red',
         borderWidth: 3,
-        backgroundColor: 'yellow',
+      //  backgroundColor: 'yellow',
         justifyContent:'center',
         padding: 5,
         margin: 5,
